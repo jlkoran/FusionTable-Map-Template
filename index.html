@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='en'>
   <head>
-    <title>Searchable Map Template Demo</title>
+    <title>Randolph Resources Map</title>
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content='' name='description' />
@@ -23,7 +23,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class='navbar-brand' href='index.html'>Searchable Map Template</a>
+          <a class='navbar-brand' href='index.html'>Randolph Health & Wellness Resources Map</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -36,8 +36,11 @@
     <div class='container-fluid'>
       <div class='row'>
         <div class='col-md-4'>
-          <p>This is a demo of <a href='http://derekeder.com'>Derek Eder's</a> <a href='http://derekeder.com/searchable_map_template/'>Searchable Map Template</a> using Google <a href='http://support.google.com/fusiontables/answer/2571232?hl=en&ref_topic=1652595'>Fusion Tables</a>. Use this section to give a little context to your map.</p>
+          <p>This is a demo of the Randolph Health & Wellness Resources Map. </p>
           <div class='well'>
+            <h4> Search by name</h4>
+              <input class='form-control' id='name_search' placeholder="Enter a business or organization name" type='text' />
+
             <h4>
               Address <small>(<a id='find_me' href='#'>find me</a>)</small>
             </h4>
@@ -55,6 +58,33 @@
                 </select>
               </label>
             </p>
+
+            <h4>
+              Service Category 
+            </h4>
+            <ul class='inputs-list unstyled'>
+              <li>
+                <label class='checkbox inline'>
+                  <input type='checkbox' id='behavioral-mental-health' />
+                  <span class='filter-box filter-red'></span>
+                  Behavioral/Mental Health
+                </label>
+              </li>
+              <li>
+                <label class='checkbox inline'>
+                  <input type='checkbox' id='substance-abuse-use' />
+                  <span class='filter-box filter-green'></span>
+                  Substance Abuse/Use
+                </label>
+              </li>
+              <li>
+                <label class='checkbox inline'>
+                  <input type='checkbox' id='dental-care' />
+                  <span class='filter-box filter-purple'></span>
+                  Dental Care
+                </label>
+              </li>
+            </ul>
 
             <br />
             <h4>Custom filters and views</h4>
@@ -106,7 +136,7 @@
     <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="js/jquery.address.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyAR5eeFETe-sMigouZtPABzHpyA02MGyjQ"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyD-m6016T3ovusD4MD3QHwb37lFsNwuRhM"></script>
     <script type="text/javascript" src="js/maps_lib.js"></script>
     <script type='text/javascript'>
       //<![CDATA[
@@ -119,11 +149,11 @@
         
         $(function() {
           var myMap = new MapsLib({
-            fusionTableId:      "1m4Ez9xyTGfY2CU6O-UgEcPzlS0rnzLU93e4Faa0",
-            googleApiKey:       "AIzaSyA3FQFrNr5W2OEVmuENqhb2MBB2JabdaOY",
-            locationColumn:     "geometry",
-            map_center:         [41.8781136, -87.66677856445312],
-            locationScope:      "chicago"
+            fusionTableId:      "1f0oMdd0sPFAFNB9yiS1EP24-HTKfdFKj1PvKQ7O5",
+            googleApiKey:       "AIzaSyCXx6ojABxkJHa3U1MBWfY48YL37WKXuHA",
+            locationColumn:     "Location",
+            map_center:         [42.243676, -71.085734],
+            locationScope:      "boston"
           });
 
           var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_address'));
