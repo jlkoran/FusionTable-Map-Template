@@ -163,6 +163,14 @@
         self.whereClause = self.locationColumn + " not equal to ''";
         
         //-----custom filters-----
+        // Checkboxes
+        var type_column = "'Service Category'";
+        var tempWhereClause = [];
+        if ( $("#substance-abuse-use").is(':checked')) tempWhereClause.push("SUBSTANCE ABUSE/USE");
+        if ( $("#behavioral-mental-health").is(':checked')) tempWhereClause.push("BEHAVIORAL/MENTAL HEALTH");
+        if ( $("#dental-care").is(':checked')) tempWhereClause.push("DENTAL CARE");
+        console.log(tempWhereClause);
+        self.whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
         //-----end of custom filters-----
 
         self.getgeoCondition(address, function (geoCondition) {
