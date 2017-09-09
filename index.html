@@ -9,6 +9,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/custom.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script type="text/javascript" src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -39,7 +40,10 @@
           <p>This is a demo of the Randolph Health & Wellness Resources Map. </p>
           <div class='well'>
             <h4> Search by name</h4>
-              <input class='form-control' id='name_search' placeholder="Enter a business or organization name" type='text' />
+              <input class='form-control' id='name_search' placeholder="Enter an organization name" type='text' />
+
+            <h4> Search by keyword</h4>
+              <input class='form-control' id='keyword_search' placeholder="Enter a keyword" type='text' />
 
             <h4>
               Address <small>(<a id='find_me' href='#'>find me</a>)</small>
@@ -86,7 +90,32 @@
               </li>
             </ul>
 
-            <br />
+            <h4>
+              Languages
+            </h4>
+            <label>
+              <select id='select_language'>
+                <option value=''>All languages</option>
+                <option value='Creole'>Creole</option>
+                <option value='Mandarin'>Mandarin</option>
+                <option value='Spanish'>Spanish</option>
+                <option value='Vietnamese'>Vietnamese</option>
+                <option value='Portuguese'>Portuguese</option>
+                <option value='Chinese'>Chinese</option>
+                <option value='Russian'>Russian</option>
+                <option value='French'>French</option>
+                <option value='Italian'>Italian</option>
+                <option value='Translation Services'>Translation Services</option>
+              </select>
+            </label>
+
+            <br>
+
+<!--             <div class='well'>
+              <div id='results_list'></div>
+            </div> -->
+
+<!--             <br />
             <h4>Custom filters and views</h4>
             <p>Take a look at the <a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples'>wiki</a> to see how to add your own custom filters and views like:</p>
             <div class='row'>
@@ -105,7 +134,7 @@
                   <li><a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/List-search-results'>Results lists</a></li>
                 </ul>
               </div>
-            </div>
+            </div> -->
             <br />
             <a class='btn btn-primary' id='search' href='#'>
               <i class='glyphicon glyphicon-search'></i>
@@ -115,6 +144,11 @@
               <i class='glyphicon glyphicon-repeat'></i>
               Reset
             </a>
+
+            <p class='pull-right'>
+              <a class='btn btn-default' id='viewmode'><i class='fa fa-list'></i> List view</a>
+            </p>
+
           </div>
           <div class='alert alert-info' id='result_box' ><strong id='result_count'></strong></div>
         </div>
@@ -126,6 +160,24 @@
             </div>
           </noscript>
           <div id='map_canvas'></div>
+
+          <div id='listview' style='display: none;'>
+            <h2>Randolph Resource Directory</h2>
+            <table class='table'>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Organization</th>
+                  <th>Address</th>
+                  <th><i class='fa fa-phone'></i> Contact</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody id='results_list'></tbody>
+            </table>
+          </div>
+
+
           <p class='pull-right'>
             <a href='http://derekeder.com/searchable_map_template/'>Searchable Map Template</a> by <a href='http://derekeder.com'>Derek Eder</a>.
         </p>
@@ -183,6 +235,19 @@
             myMap.reset(); 
             return false;
           });
+
+          $('#viewmode').click(function(){
+            if ($('#map_canvas').is(":visible")){
+              $('#viewmode').html("<i class='fa fa-map-marker'></i> Map view");
+              $('#listview').show();
+              $('#map_canvas').hide();
+            } else {
+              $('#viewmode').html("<i class='fa fa-list'></i> Results");
+              $('#map_canvas').show();
+              $('#listview').hide();
+            } 
+          });
+
           
           $(":text").keydown(function(e){
               var key =  e.keyCode ? e.keyCode : e.which;

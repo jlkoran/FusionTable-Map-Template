@@ -60,6 +60,8 @@
         self.searchrecords = null;
 
         //reset filters
+        $("#name_search").val("");
+        $("#keyword_search").val("");
         $("#search_address").val(self.convertToPlainString($.address.parameter('address')));
         var loadRadius = self.convertToPlainString($.address.parameter('radius'));
         if (loadRadius != "") 
@@ -71,6 +73,8 @@
         $("#result_box").hide();
 
         //-----custom initializers-----
+        $("#name_search").val("");
+        $("#keyword_search").val("");
         //-----end of custom initializers-----
 
         //run the default search when page loads
@@ -99,6 +103,7 @@
         self.fusionTable = self.searchrecords;
         self.searchrecords.setMap(map);
         self.getCount(whereClause);
+        self.getList(whereClause);
     };
 
 
@@ -163,14 +168,31 @@
         self.whereClause = self.locationColumn + " not equal to ''";
         
         //-----custom filters-----
+        //Name Search
+        var name_search = $("#name_search").val().replace("'", "\\'");
+        if (name_search != '')
+            self.whereClause += " AND 'Organization' contains ignoring case '" + name_search + "'";
+
+        //Keyword Search
+        var keyword_search = $("#keyword_search").val().replace("'", "\\'");
+        if (keyword_search != '')
+            self.whereClause += " AND 'Description' contains ignoring case '" + keyword_search + "'";
+
         // Checkboxes
-        var type_column = "'Service Category'";
+        var service_category = "'Service Category'";
         var tempWhereClause = [];
         if ( $("#substance-abuse-use").is(':checked')) tempWhereClause.push("SUBSTANCE ABUSE/USE");
         if ( $("#behavioral-mental-health").is(':checked')) tempWhereClause.push("BEHAVIORAL/MENTAL HEALTH");
         if ( $("#dental-care").is(':checked')) tempWhereClause.push("DENTAL CARE");
         console.log(tempWhereClause);
-        self.whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
+        self.whereClause += " AND " + service_category + " IN ('" + tempWhereClause.join("','") + "')";
+
+        //Language Drop Down
+        var language_type = $("#select_language").val();
+        console.log(language_type);
+        if (language_type != "")
+            self.whereClause += " AND 'Languages Spoken' contains ignoring case '" + language_type + "'";
+
         //-----end of custom filters-----
 
         self.getgeoCondition(address, function (geoCondition) {
@@ -306,6 +328,95 @@
         });
         $("#result_box").fadeIn();
     };
+
+    MapsLib.prototype.getList = function(whereClause) {
+            var self = this;
+            var selectColumns = "Organization, Location, Hours, 'Phone Number', Email, Website, Description, 'Ages Served', 'Languages Spoken', Icon";
+            self.query({
+                select: selectColumns,
+                where: whereClause,
+                orderBy: 'Organization'
+            }, function (json) {
+                self.displayList(json);
+            });
+        }
+
+        MapsLib.prototype.displayList = function(json) {
+            var self = this;
+            
+            var data = json['rows'];
+            var template = '';
+
+            var results = $('#results_list');
+            results.hide().empty(); //hide the existing list and empty it out first
+
+            if (data == null) {
+                //clear results list
+                results.append("<tr><td colspan='6'>No results found</td></tr>");
+            }
+            else {
+                for (var row in data) {
+                    // var type_color = 'green';
+                    // if (data[row][10] == '3') type_color = 'blue';
+                    // if (data[row][10] == '2') type_color = 'red';
+                    console.log(data[row]);
+                    var icon;
+                    if (data[row][9] == "large_green")
+                        icon = "grn-circle.png";
+                    if (data[row][9] == "large_red")
+                        icon = "red-circle.png";
+                    if (data[row][9] == "large_purple")
+                        icon = "purple-circle.png";
+
+                    var iconurl = 'http://maps.google.com/mapfiles/kml/paddle/' + icon;
+
+                    template = "\
+                      <tr>\
+                          <td><img src=\"" + iconurl + "\" style=\"width: 40px;\"></img></td>\
+                          <td><strong>" + data[row][0] + "</strong><br /><small>" + data[row][2] + "<br />" + "</small></td>\
+                          <td>" + data[row][1] + "<br />"; 
+                    
+                    var directionsurl = "https://www.google.com/maps/dir/current+location/" + data[row][1].replace(" ", "+");
+
+                    // template += "<a class=\"directions-btn\" href=\"" + directionsurl + "\" target='_blank'><i class=\"fa fa-map-marker\" aria-hidden=\"true\"></i> directions</a></td>\
+                    //   <td>";
+
+                    template += "<button type=\"button\" class=\"btn btn-info\"><a href=\"" + directionsurl + 
+                    "\" target='_blank'><i class=\"fa fa-map-marker\" aria-hidden=\"true\"></i> directions</a></button></td>\
+                      <td>";
+
+                    if (data[row][2] != "") 
+                        template += "<b>Hours:</b> " + data[row][2] + "<br>";
+                    if (data[row][3] != "") 
+                        template += "<b>Phone:</b> " + data[row][3] + "<br>";
+                    // if (data[row][5] != "") 
+                    //     template += "<b>Phone secondary:</b> " + data[row][5] + "<br>";
+                    // if (data[row][6] != "") 
+                    //     template += "<b>Fax:</b> " + data[row][6] + "<br>";
+                    if (data[row][4] != "") 
+                        template += "<b>Email:</b> <a href='mailto:" + data[row][4] + "' target='_blank'>" + data[row][4] + "</a><br>";
+                    if (data[row][5] != "") 
+                        template += "<b>Website:</b> <a href='http://" + data[row][5] + "' target='_blank'>" + data[row][5] + "</a><br>";
+                        // template += "<b>Website:</b> <a href="data[row][5] + "' target='_blank'>" + data[row][5] + "</a><br>";
+
+     
+                    template += "\
+                          </td>\
+                          <td>" + data[row][6] + "<br />";
+
+                        if (data[row][7] != "") 
+                            template += "<b>Ages Served:</b> " + data[row][7] + "<br>"; 
+
+                        if (data[row][8] != "") 
+                            template += "<b>Languages Spoken:</b> " + data[row][8] + "<br>";  
+
+                    template += "</td>\
+                      </tr>";
+                    results.append(template);
+                }
+            }
+            results.fadeIn();
+        }
 
     MapsLib.prototype.addCommas = function (nStr) {
         nStr += '';

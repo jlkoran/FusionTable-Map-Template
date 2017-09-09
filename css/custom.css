@@ -25,6 +25,12 @@ a:hover { color: #4B58A6; }
 .filter-purple { background-color: #7C54FB; }
 .filter-red { background-color: #FB6353; }
 
+a.directions-btn {
+  margin: 5px;
+  background: blue;
+  color: white;
+}
+
 canvas {-ms-touch-action: double-tap-zoom;}
 
 /* customizations for iframe template */
