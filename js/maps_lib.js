@@ -364,7 +364,7 @@
                     if (data[row][9] == "large_purple")
                         icon = "purple-circle.png";
 
-                    var iconurl = 'http://maps.google.com/mapfiles/kml/paddle/' + icon;
+                    var iconurl = 'https://maps.google.com/mapfiles/kml/paddle/' + icon;
 
                     template = "\
                       <tr>\
@@ -389,7 +389,7 @@
                     if (data[row][4] != "") 
                         template += "<b>Email:</b> <a href='mailto:" + data[row][4] + "' target='_blank'>" + data[row][4] + "</a><br>";
                     if (data[row][5] != "") 
-                        template += "<b>Website:</b> <a href='http://" + data[row][5] + "' target='_blank'>" + data[row][5] + "</a><br>";
+                        template += "<b>Website:</b> <a href='https://" + data[row][5] + "' target='_blank'>" + data[row][5] + "</a><br>";
                         // template += "<b>Website:</b> <a href="data[row][5] + "' target='_blank'>" + data[row][5] + "</a><br>";
 
      
