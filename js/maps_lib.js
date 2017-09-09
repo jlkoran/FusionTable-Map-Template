@@ -184,12 +184,10 @@
         if ( $("#substance-abuse-use").is(':checked')) tempWhereClause.push("SUBSTANCE ABUSE/USE");
         if ( $("#behavioral-mental-health").is(':checked')) tempWhereClause.push("BEHAVIORAL/MENTAL HEALTH");
         if ( $("#dental-care").is(':checked')) tempWhereClause.push("DENTAL CARE");
-        console.log(tempWhereClause);
         self.whereClause += " AND " + service_category + " IN ('" + tempWhereClause.join("','") + "')";
 
         //Language Drop Down
         var language_type = $("#select_language").val();
-        console.log(language_type);
         if (language_type != "")
             self.whereClause += " AND 'Languages Spoken' contains ignoring case '" + language_type + "'";
 
@@ -283,7 +281,6 @@
             url: [theurl.base, encodeURIComponent(theurl.queryStr.join(" ")), "&key=", theurl.key].join(''),
             dataType: "json"
         }).done(function (response) {
-            //console.log(response);
             if (callback) callback(response);
         }).fail(function(response) {
             self.handleError(response);
@@ -359,7 +356,6 @@
                     // var type_color = 'green';
                     // if (data[row][10] == '3') type_color = 'blue';
                     // if (data[row][10] == '2') type_color = 'red';
-                    console.log(data[row]);
                     var icon;
                     if (data[row][9] == "large_green")
                         icon = "grn-circle.png";
@@ -378,11 +374,8 @@
                     
                     var directionsurl = "https://www.google.com/maps/dir/current+location/" + data[row][1].replace(" ", "+");
 
-                    // template += "<a class=\"directions-btn\" href=\"" + directionsurl + "\" target='_blank'><i class=\"fa fa-map-marker\" aria-hidden=\"true\"></i> directions</a></td>\
-                    //   <td>";
-
-                    template += "<button type=\"button\" class=\"btn btn-info\"><a href=\"" + directionsurl + 
-                    "\" target='_blank'><i class=\"fa fa-map-marker\" aria-hidden=\"true\"></i> directions</a></button></td>\
+                    template += "<button style='margin-top: 10px' type=\"button\" class=\"btn btn-info\"><a class=\"directions-btn\" href=\"" + directionsurl + 
+                    "\" target='_blank'><i class=\"fa fa-map-marker\" aria-hidden=\"true\"></i> <b>Directions</b></a></button></td>\
                       <td>";
 
                     if (data[row][2] != "") 
