@@ -375,7 +375,7 @@
                     var directionsurl = "https://www.google.com/maps/dir/current+location/" + data[row][1].replace(" ", "+");
 
                     template += "<button style='margin-top: 10px' type=\"button\" class=\"btn btn-info\"><a class=\"directions-btn\" href=\"" + directionsurl + 
-                    "\" target='_blank'><i class=\"fa fa-map-marker\" aria-hidden=\"true\"></i> <b>Directions</b></a></button></td>\
+                    "\" target='_blank'><i class=\"fa fa-map-marker \" aria-hidden=\"true\"></i> <b>Directions</b></a></button></td>\
                       <td>";
 
                     if (data[row][2] != "") 
