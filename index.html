@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang='en'>
   <head>
-    <title>Randolph Resources Map</title>
+    <title>South Shore Resources Map</title>
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta content='' name='description' />
-    <meta content='' name='author' />
+    <meta content='South Shore Health & Wellness Resources' name='description' />
+    <meta content='CHNA20' name='author' />
+
+    <link rel="icon" href="images/icon.png">
+
     <!-- Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/custom.css"/>
@@ -24,12 +27,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class='navbar-brand' href='index.html'>Randolph Health & Wellness Resources Map</a>
+          <a class='navbar-brand' href='index.html'><img style="height:20px" src="images/icon.png"> South Shore Health & Wellness Resources Map</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class='active'><a href="index.html">Map</a></li>
-            <li><a href="about.html">About</a></li>
+            <li class='active'><a href="index.html"><i class="fa fa-map" aria-hidden="true"></i> Map</a></li>
+            <li><a href="about.html"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -37,7 +40,7 @@
     <div class='container-fluid'>
       <div class='row'>
         <div class='col-md-4'>
-          <p>This is a demo of the Randolph Health & Wellness Resources Map. </p>
+          <!-- <p>This is a demo of the South Shore Health & Wellness Resources Map. </p> -->
           <div class='well'>
             <h4> Search by name</h4>
               <input class='form-control' id='name_search' placeholder="Enter an organization name" type='text' />
@@ -162,14 +165,14 @@
           <div id='map_canvas'></div>
 
           <div id='listview' style='display: none;'>
-            <h2>Randolph Resource Directory</h2>
+            <h2>South Shore Resource Directory</h2>
             <table class='table'>
               <thead>
                 <tr>
                   <th></th>
                   <th>Organization</th>
                   <th>Address</th>
-                  <th><i class='fa fa-phone'></i> Contact</th>
+                  <th>Contact</th>
                   <th>Description</th>
                 </tr>
               </thead>
@@ -238,11 +241,11 @@
 
           $('#viewmode').click(function(){
             if ($('#map_canvas').is(":visible")){
-              $('#viewmode').html("<i class='fa fa-map-marker'></i> Map view");
+              $('#viewmode').html("<i class='fa fa-map-o'></i> Map view");
               $('#listview').show();
               $('#map_canvas').hide();
             } else {
-              $('#viewmode').html("<i class='fa fa-list'></i> Results");
+              $('#viewmode').html("<i class='fa fa-list'></i> List view");
               $('#map_canvas').show();
               $('#listview').hide();
             } 
