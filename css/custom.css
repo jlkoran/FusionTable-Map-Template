@@ -5,6 +5,25 @@ a:hover { color: #4B58A6; }
   max-width: none;
 }
 
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 3px 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #292b2c;
+    text-align: inherit;
+    white-space: nowrap;
+    background: 0 0;
+    border: 0;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #1d1e1f;
+    text-decoration: none;
+    background-color: #ccc;
+}
+
 .filter-box { 
   height: 15px; 
   width: 15px;  
