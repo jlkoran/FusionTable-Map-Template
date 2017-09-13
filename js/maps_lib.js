@@ -59,6 +59,17 @@
         });
         self.searchrecords = null;
 
+        // google.maps.event.addListener(layer, 'click', function(e) {
+
+        //           // Change the content of the InfoWindow
+        //           e.infoWindowHtml = e.row['Store Name'].value + "<br>";
+
+        //           // If the delivery == yes, add content to the window
+        //           if (e.row['delivery'].value == 'yes') {
+        //             e.infoWindowHtml += "Delivers!";
+        //           }
+        //         });
+
         //reset filters
         $("#name_search").val("");
         $("#keyword_search").val("");
@@ -338,6 +349,17 @@
             });
         }
 
+    // MapsLib.prototype.printDiv = function(divName) {
+    //          var printContents = document.getElementById(divName).innerHTML;
+    //          var originalContents = document.body.innerHTML;
+
+    //          document.body.innerHTML = printContents;
+
+    //          window.print();
+
+    //          document.body.innerHTML = originalContents;
+    //     }
+
         MapsLib.prototype.displayList = function(json) {
             var self = this;
             
@@ -366,11 +388,40 @@
 
                     var iconurl = 'https://maps.google.com/mapfiles/kml/paddle/' + icon;
 
+                    var emailBody = "\nOrganization: "+ data[row][0] +
+                                "\nLocation: "+ data[row][1] +
+                                "\nHours: "+ data[row][2] +
+                                "\nPhone: "+ data[row][3] +
+                                "\nEmail: "+ data[row][4] +
+                                "\nWebsite: "+ data[row][5] +
+                                "\nDescription: "+ data[row][6] +
+                                "\nAges Served: "+ data[row][7] +
+                                "\nLanguages Spoken: "+ data[row][8] +
+                                "\n\n Source: https://jlkoran.github.io/South-Shore-Searchable-Map";
+
+                    // <div id=\"id-" + data[row][0] + "\">
+
                     template = "\
                       <tr>\
                           <td><img src=\"" + iconurl + "\" style=\"width: 40px;\"></img></td>\
-                          <td><strong>" + data[row][0] + "</strong><br /><small>" + data[row][2] + "<br />" + "</small></td>\
+                          <td><strong>" + data[row][0] + "</strong><br />" +
+                            "<div class=\"dropdown\" style=\"margin-top:10px\">"+
+                              "<button class=\"btn btn-sm btn-info dropdown-toggle\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"+
+                                "<i class=\"fa fa-share \" aria-hidden=\"true\"></i> Share"+
+                              "</button>"+
+                              "<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">"+
+                                "<a class=\"dropdown-item btn-sm\" href=\""+
+                                "mailto:?Subject=South Shore Health and Wellness Resources Map: " + data[row][0] + "&amp;Body="+ 
+                                encodeURIComponent(emailBody) +
+                                "\"><i class=\"fa fa-envelope \" aria-hidden=\"true\"></i> Email</a>"+
+                                // "<a class=\"dropdown-item btn-sm\" href=\"javascript:;\" onclick=\"window.print()\"><i class=\"fa fa-print \" aria-hidden=\"true\"></i> Print</a>"+
+                              "</div>"+
+                            "</div>"+
+                            "</td>\
                           <td>" + data[row][1] + "<br />"; 
+
+                          // onclick=\"printDiv('id-"+data[row][0]+"')\"
+
                     
                     var directionsurl = "https://www.google.com/maps/dir/current+location/" + data[row][1].replace(" ", "+");
 
